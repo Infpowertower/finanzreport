@@ -2,7 +2,40 @@ import sqlite3
 from pathlib import Path
 import os
 import logging
+import sys
 
+
+def execute_sql(db_name, *sql):
+    db_path = 'log/' + db_name
+    db_file = Path(db_path)
+    if not db_file.is_file():
+        logging.getLogger('database').warning("execute_sql: Calling %s, but doesn't exist", db_path)
+        create_db(db_name)
+    db_con = sqlite3.connect(db_path)
+    c = db_con.cursor()
+    for command in sql:
+        c.execute(command)
+        print(c.fetchone())
+    db_con.commit()
+    db_con.close()
+
+def create_table(db_name, table_name, *values):
+    db_values = ''
+    i = 1
+    for element in values:
+        if i == 1:
+            db_values = element
+        else:
+            db_values += ', ' + element
+        i += 1
+    try:
+        execute_sql(db_name,"CREATE TABLE {} ({})".format(table_name, db_values))
+        logging.getLogger('database').info("create_table: New table {} in database {} created!".format(table_name, db_name))
+    except sqlite3.OperationalError:
+        logging.getLogger('database').error("create_table: Table already exists!")
+    except:
+        logging.getLogger('database').critical("create_table: Unexpected error: {}".format(sys.exc_info()[0]))
+        raise
 
 def create_db(db_name):
     if not os.path.exists('db'):

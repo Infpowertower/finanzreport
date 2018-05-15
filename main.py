@@ -5,13 +5,11 @@ def init_logs():
     log.init_log('main')
     log.init_log('database')
     log.init_log('logging')
+    log.init_log('sql')
 
 if (__name__ == "__main__"):
     init_logs()
-    db.create_db('users')
-
-    #test
-    '''logging.getLogger('main').info('info')
-    logging.getLogger('main').warning("Warning!")
-    logging.getLogger('main').error("Whats happening??")
-    logging.getLogger('main').critical("I'm dying!")'''
+    db.delete_db('login')
+    db.create_table('login', 'credentials', 'userid real', 'username text', 'password text')
+    db.execute_sql('login', "INSERT INTO test VALUES ('', 'tim', 2)")
+    db.execute_sql('login', "SELECT * FROM test")
