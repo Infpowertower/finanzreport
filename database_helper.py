@@ -5,9 +5,14 @@ import logging
 import sys
 import shutil
 
-
 def execute_sql(db_name, *sql):
-    db_path = 'db/' + db_name + '.db'
+    """
+    Execute raw sql statements in a database.
+    :param db_name: String - name of the database. Path and data type are added automatically. Example: settings
+    :param sql: String(s) - list of sql statement to be executed.
+    :return:
+    """
+    db_path = 'log/' + db_name + '.db'
     db_file = Path(db_path)
     if not db_file.is_file():
         logging.getLogger('database').warning("execute_sql: Calling %s, but doesn't exist", db_path)
@@ -22,6 +27,14 @@ def execute_sql(db_name, *sql):
 
 
 def create_table(db_name, table_name, *values):
+    """
+
+    :param db_name: String- name of the database. Path and data type are added automatically. Example: settings
+    :param table_name: String
+    :param values: String - Have to be entered in Form "name data type". Example: "name text".
+    Primary key entered with "Primary key (example)" - no data type needed as it already should be stated before.
+    :return:
+    """
     db_values = ''
     i = 1
     for element in values:
@@ -61,6 +74,11 @@ def create_db(db_name):
 
 
 def delete_db(db_name):
+    """
+
+    :param db_name:
+    :return:
+    """
     db_name = db_name+".db"
     db_path = 'db/' + db_name
     db_file = Path(db_path)
