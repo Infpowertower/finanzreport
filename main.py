@@ -28,23 +28,38 @@ class startGui(Thread):
 '''
 
 
+window_width = 800
+window_height = 600
+
+
 class Gui:
     def __init__(self):
+        global window_width
+        self.window_width = window_width
+        global window_height
+        self.window_height = window_height
         self.mainWindow = tk.Tk()
         self.mainWindow.geometry("800x600")
+        self.mainWindow.minsize(0, 0)
         self.mainWindow.title("Finanzreport")
-        # self.mainWindow.configure(background='white')
-        self.mainWindow.tk_setPalette(background='#FFFFFF')
+        self.mainWindow.configure(background='white')
+
+        # turned off for debug purposes:
+        # self.mainWindow.tk_setPalette(background='#FFFFFF')
+
+        # removes os window borders/bezels. Second option for taskbar position
+        '''self.mainWindow.overrideredirect(True)
+        self.mainWindow.attributes('-topmost', 1)'''
 
     def start(self):  # Start
         label = tk.Label(self.mainWindow)
         label.pack()
         get_current_user(label)
-        w = tk.Label(self.mainWindow, text="Work in progress")
-        w.pack()
+        w = tk.Label(self.mainWindow, text="Current saldo: ", anchor=tk.W)
+        w.pack(fill="x")
         canvas = tk.Canvas(self.mainWindow)
-        canvas.pack()
-        canvas.create_text(0, 0, text="TEST")
+        canvas.pack(fill="both")
+        canvas.create_text(20, 20, text="TEST")
         self.mainWindow.mainloop()
 
     def quit(self):
