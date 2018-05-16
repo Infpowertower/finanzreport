@@ -45,6 +45,7 @@ def delete_table(db_name, table_name):
 def insert_data(db_name, table_name, *values):
     pass
 
+
 def create_db(db_name):
     if not os.path.exists('db'):
         os.makedirs('db')
