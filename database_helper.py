@@ -6,7 +6,7 @@ import sys
 import shutil
 
 
-def execute_sql(db_name, *sql):
+def execute_sql(db_name, sql):
     """
     Execute raw sql statements in a database.
     :param db_name: String - name of the database. Path and data type are added automatically. Example: settings
@@ -20,11 +20,12 @@ def execute_sql(db_name, *sql):
         create_db(db_name)
     db_con = sqlite3.connect(db_path)
     c = db_con.cursor()
-    for command in sql:
-        c.execute(command)
-        logging.getLogger('sql').info(c.fetchone())
+    c.execute(sql)
+    output = c.fetchone()
+    logging.getLogger('sql').info(output)
     db_con.commit()
     db_con.close()
+    return output
 
 
 def create_table(db_name, table_name, *values):
@@ -85,8 +86,9 @@ def convert_elem(elem):
 
 def select_all(db_name, table_name):
     try:
-        execute_sql(db_name, "SELECT * FROM {}".format(table_name))
+        output = execute_sql(db_name, "SELECT * FROM {}".format(table_name))
         logging.getLogger('database').info("select_all: Data selected")
+        return output
     except sqlite3.OperationalError as err:
         logging.getLogger('database').error("select_all: {}".format(err))
 
