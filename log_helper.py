@@ -30,14 +30,14 @@ def init_log(name):
 def delete_log(name):
     path = 'log/' + name + ".log"
     file = Path(path)
-    if (file.is_file()):
+    if file.is_file():
         os.remove(path)
         logging.getLogger('logging').info("delete_log: %s deleted", name)
     else:
         logging.getLogger('logging').info("delete_log: %s doesn't exist", path)
 
 
-def purge_logs(ask = True):
+def purge_logs(ask=True):
     if not ask:
         if os.path.exists('log'):
             shutil.rmtree('log')
