@@ -1,5 +1,5 @@
+import time
 import tkinter as tk
-import database_helper as db
 
 '''
 class startGui(Thread):
@@ -39,6 +39,7 @@ class Gui:
         self.mainWindow.geometry("800x600")
         self.mainWindow.minsize(0, 0)
         self.mainWindow.title("Finanzreport")
+
         self.mainWindow.configure(background='white')
         # turned off for debug purposes:
         # self.mainWindow.tk_setPalette(background='#FFFFFF')
@@ -51,8 +52,7 @@ class Gui:
         label = tk.Label(self.mainWindow)
         label.pack()
         get_current_user(label)
-        curr_saldo = db.select_all('db_test', 'table_test')[1]
-        w = tk.Label(self.mainWindow, text="Current saldo: {}".format(curr_saldo), anchor=tk.W)
+        w = tk.Label(self.mainWindow, text="Current saldo: ", anchor=tk.W)
         w.pack(fill="x")
         canvas = tk.Canvas(self.mainWindow)
         canvas.pack(fill="both")

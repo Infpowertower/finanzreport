@@ -45,10 +45,10 @@ def create_table(db_name, table_name, *values):
             db_values += ', ' + element
         i += 1
     try:
-        execute_sql(db_name, "CREATE TABLE {} ({})".format(table_name, db_values))
+        execute_sql(db_name, "CREATE TABLE {} ({});".format(table_name, db_values))
         logging.getLogger('database').info("create_table: New table {} in database {} created!".format(table_name, db_name))
-    except sqlite3.OperationalError:
-        logging.getLogger('database').error("create_table: Couldn't create table!")
+    except sqlite3.OperationalError as err:
+        logging.getLogger('database').error("create_table: {}".format(err))
 
 
 def delete_table(db_name, table_name):
