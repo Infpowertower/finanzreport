@@ -13,14 +13,12 @@ def init_logs():
 
 
 if __name__ == "__main__":
+    log.purge_logs()
     init_logs()
-
-    # gui = startGui()
-    # gui.setName('GUI')
-    # Start running the threads!
-    # gui.start()
-    # Wait for the threads to finish...
-    # gui.join()
+    db.delete_table('db_test', 'table_test')
+    db.create_table('db_test', 'table_test', 'transid integer', 'value real', 'note text')
+    db.insert_data('db_test', 'table_test', 1, 9384.38, 'lhdfliha')
+    db.select_all('db_test', 'table_test')
     gui = interface.Gui()
-    gui.start()
+    # gui.start()
     print('Main Terminating...')
