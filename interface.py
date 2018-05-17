@@ -1,5 +1,6 @@
 import time
 import tkinter as tk
+import database_helper as db
 
 '''
 class startGui(Thread):
@@ -52,7 +53,8 @@ class Gui:
         label = tk.Label(self.mainWindow)
         label.pack()
         get_current_user(label)
-        w = tk.Label(self.mainWindow, text="Current saldo: ", anchor=tk.W)
+        curr_saldo = db.select_all('db_test', 'table_test')[1]
+        w = tk.Label(self.mainWindow, text="Current saldo: {}".format(curr_saldo), anchor=tk.W)
         w.pack(fill="x")
         canvas = tk.Canvas(self.mainWindow)
         canvas.pack(fill="both")
