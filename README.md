@@ -48,10 +48,10 @@ And there are many possibilities to offer services to our users that will be wor
 
 ## Technical stuff
 How will it work?
-###High-level
+### High-level
 Without going into details. What do we need to achieve?
-####Features to incorporate:
-#####Short term:
+#### Features to incorporate:
+##### Short term:
 * __Working web server__
     * import data
     * create user
@@ -60,19 +60,19 @@ Without going into details. What do we need to achieve?
     * login
     * look at data
     * add/edit data
-#####Mid term:
+##### Mid term:
 * __Implementation of machine learning/artificial intelligence for predictions and importing data__
     * take a photo of money and get the sum
 * Open up project and pay workers for added features
-#####Long term
+##### Long term
 * Allow users to use the product
 * Open up platform to plugins
 
 
-#####Ideas
+##### Ideas
 * Integrated unified OPEN mobile paying app (no more Google Pay, Samsung Pay, Apple Pay etc.)
 
-###Specifics
+### Specifics
 In its full form it should be a cloud-based webapplication with a dedicated mobile app.
 In the beginning data has to be added by hand.
 The Columns:
