@@ -43,16 +43,34 @@ Our revenue will entirely consist of financial services we provide our customers
 Creating your tax return automatically is going to cost you a bit.
 Saving your data securely in our cloud will not be free.
 And there are many possibilities to offer services to our users that will be worth the money they pay for it.
+
 **We won't and we can't use the data for directly creating revenue as a trustworthy image is one of the cornerstones of this app.**
-
-Feature to incorporate:
-Unified OPEN mobile paying app (no more Google Pay, Samsung Pay, Apple Pay etc.)
-
 
 ## Technical stuff
 How will it work?
 ###High-level
+Without going into details. What do we need to achieve?
+####Features to incorporate:
+#####Short term:
+* __Working web server__
+    * import data
+    * create user
+    * download data
+* __Web app__
+    * login
+    * look at data
+    * add/edit data
+#####Mid term:
+* __Implementation of machine learning/artificial intelligence for predictions and importing data__
+    * take a photo of money and get the sum
+* Open up project and pay workers for added features
+#####Long term
+* Allow users to use the product
+* Open up platform to plugins
 
+
+#####Ideas
+* Integrated unified OPEN mobile paying app (no more Google Pay, Samsung Pay, Apple Pay etc.)
 
 ###Specifics
 In its full form it should be a cloud-based webapplication with a dedicated mobile app.
