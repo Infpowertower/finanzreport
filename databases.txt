@@ -1,0 +1,7 @@
+tables: user, accounts, transactions
+user has accounts
+accounts have transactions
+
+user: Int id, Str username, Str name, Str surname, *password, *birthday, *address
+account: Int id, F_KEY user, Float balance, *F_KEY bank,
+transaction: Int id, F_KEY account, Float value, Date date, *Str Note, *Str Category

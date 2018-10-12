@@ -16,15 +16,26 @@ def execute_sql(db_name, sql):
     db_path = 'db/' + db_name + '.db'
     db_file = Path(db_path)
     if not db_file.is_file():
-        logging.getLogger('database').warning("execute_sql: Calling %s, but doesn't exist", db_path)
+        log("execute_sql: Calling %s, but doesn't exist", db_path, 'warning')
         create_db(db_name)
     db_con = sqlite3.connect(db_path)
     c = db_con.cursor()
     c.execute(sql)
-    output = c.fetchone()
+    # output = c.fetchone()
+    output = c.fetchall()
     logging.getLogger('sql').info(output)
     db_con.commit()
     db_con.close()
+    return output
+
+
+def show_tables(db_name):
+    """
+    Show all tables inside a database
+    :param db_name:
+    :return:
+    """
+    output = execute_sql(db_name, "SELECT name FROM sqlite_master WHERE type='table';")
     return output
 
 
@@ -46,9 +57,9 @@ def create_table(db_name, table_name, *values):
         i += 1
     try:
         execute_sql(db_name, "CREATE TABLE {} ({});".format(table_name, db_values))
-        logging.getLogger('database').info("create_table: New table {} in database {} created!".format(table_name, db_name))
+        log("create_table: New table {} in database {} created!".format(table_name, db_name))
     except sqlite3.OperationalError as err:
-        logging.getLogger('database').error("create_table: {}".format(err))
+        log("create_table: {}".format(err), 'error')
 
 
 def delete_table(db_name, table_name):
@@ -71,9 +82,9 @@ def insert_data(db_name, table_name, *values):
         i += 1
     try:
         execute_sql(db_name, "INSERT INTO {} VALUES ({});".format(table_name, db_values))
-        logging.getLogger('database').info("insert_data: Data inserted in database {} table {}".format(db_name, table_name))
+        log("insert_data: Data inserted in database {} table {}".format(db_name, table_name))
     except sqlite3.OperationalError as err:
-        logging.getLogger('database').error("insert_data: {}".format(err))
+        log("insert_data: {}".format(err), 'error')
     pass
 
 
@@ -84,13 +95,14 @@ def convert_elem(elem):
         elem = str(elem)
     return elem
 
+
 def select_all(db_name, table_name):
     try:
         output = execute_sql(db_name, "SELECT * FROM {}".format(table_name))
-        logging.getLogger('database').info("select_all: Data selected")
+        log("select_all: Data selected")
         return output
     except sqlite3.OperationalError as err:
-        logging.getLogger('database').error("select_all: {}".format(err))
+        log("select_all: {}".format(err), 'error')
 
 
 def create_db(db_name):
@@ -100,11 +112,11 @@ def create_db(db_name):
     db_path = 'db/' + db_name
     db_file = Path(db_path)
     if db_file.is_file():
-        logging.getLogger('database').warning('create_db: Database exists!')
+        log('create_db: Database exists!', 'warning')
     else:
         with sqlite3.connect(db_path) as db:
             pass
-        logging.getLogger('database').info('create_db: Database %s created', db_name)
+        log('create_db: Database {} created'.format(db_name))
 
 
 def delete_db(db_name):
@@ -118,26 +130,26 @@ def delete_db(db_name):
     db_file = Path(db_path)
     if db_file.is_file():
         os.remove(db_path)
-        logging.getLogger('database').info('delete_db: Database %s deleted', db_name)
+        log('delete_db: Database {} deleted'.format(db_name))
     else:
-        logging.getLogger('database').warning("delete_db: Database %s doesn't exist!", db_path)
+        log("delete_db: Database {} doesn't exist!".format(db_path), 'warning')
 
 
 def purge_dbs(ask=True):
     if not ask:
         if os.path.exists('db'):
             shutil.rmtree('db')
-            logging.getLogger('database').warning("purge_dbs: All databases were deleted")
+            log("purge_dbs: All databases were deleted", 'warning')
         else:
-            logging.getLogger('database').info("purge_dbs: No databases to delete")
+            log("purge_dbs: No databases to delete")
         return
     in1 = input("Are you sure to delete ALL databases? [y/N]")
     if not in1 == 'y' or not in1 == 'Y':
         if os.path.exists('db'):
             shutil.rmtree('db')
-            logging.getLogger('database').warning("purge_dbs: All databases were deleted")
+            log("purge_dbs: All databases were deleted", 'warning')
         else:
-            logging.getLogger('database').info("purge_dbs: No databases to delete")
+            log("purge_dbs: No databases to delete")
 
 
 def log(message, type='info'):
